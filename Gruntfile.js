@@ -10,11 +10,14 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc',
             }
         },
-        mochacli: {
-            all: ['test/**/*.js'],
-            options: {
-                reporter: 'spec',
-                ui: 'tdd'
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    ui: 'bdd',
+                    timeout: 3000
+                },
+                src: ['test/**/*.js']
             }
         },
         'mocha_istanbul': {
@@ -23,6 +26,7 @@ module.exports = function(grunt) {
                 options: {
                     coverage: true,
                     legend: true,
+                    timeout: 3000,
                     /* check: {
                         lines: 90,
                         statements: 90
@@ -46,11 +50,11 @@ module.exports = function(grunt) {
 
     // Load the plugins
     grunt.loadNpmTasks('grunt-contrib-jshint')
-    grunt.loadNpmTasks('grunt-mocha-cli')
+    grunt.loadNpmTasks('grunt-mocha-test')
     grunt.loadNpmTasks('grunt-mocha-istanbul')
 
     // Configure tasks
     grunt.registerTask('coveralls', ['mocha_istanbul:coveralls'])
     grunt.registerTask('default', ['test'])
-    grunt.registerTask('test', ['mochacli', 'jshint', 'coveralls'])
+    grunt.registerTask('test', ['mochaTest:test', 'jshint', 'coveralls'])
 }

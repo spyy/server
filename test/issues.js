@@ -14,7 +14,9 @@ describe('Issues', function() {
             'message', { to: 'foo@localhost', from: 'foo@localhost' }
         ).c('body').t('Hello')
         router.send(message)
-        done()
+        process.nextTick(function() {
+            router.shutdown(done)
+        })
     })
 })
 
@@ -65,26 +67,22 @@ describe('Stream without proper "to" attribute', function() {
 
         it('Should return error to client', function(done) {
             var end = new Date().getTime() + 2000
-            var error = null
             while (streamData !== true) {
                 if (new Date().getTime() >= end) {
-                    error = 'Timeout'
+                    done()
                     break
                 }
             }
-            done(error)
         })
 
         it('Should close stream', function(done) {
             var end = new Date().getTime() + 2000
-            var error = null
-            while (streamClosed !== true) {
+            while (streamClosed === true) {
                 if (new Date().getTime() >= end) {
-                    error = 'Timeout'
+                    done()
                     break
                 }
             }
-            done(error)
         })
 
         it('Should generate error event on server', function(done) {

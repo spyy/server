@@ -11,7 +11,7 @@ var Client = require('node-xmpp-client')
 var PORT = 6767
 
 function makeServer (Server) {
-  var server = new Server({port: PORT, autostart: false})
+  var server = new Server({port: PORT})
   server.on('connection', function (connection) {
     connection.on('authenticate', function (creds, cb) {
       cb(null, creds)

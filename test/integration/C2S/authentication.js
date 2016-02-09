@@ -23,9 +23,10 @@ var user = {
 function startServer (mechanism) {
   // Sets up the server.
   var c2s = new Server({
-    port: 5222,
     domain: 'localhost'
   })
+
+  c2s.listen(5222)
 
   if (mechanism) {
     // remove plain

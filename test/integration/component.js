@@ -7,9 +7,7 @@ var XMPP = require('../..')
 var Server = XMPP.component.Server
 var Component = require('node-xmpp-component')
 
-var server = new Server({
-  autostart: false
-})
+var server = new Server()
 server.on('connection', function (connection) {
   connection.on('verify-component', function (jid, cb) {
     switch (jid.toString()) {

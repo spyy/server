@@ -6,9 +6,7 @@ var XMPP = require('../../..')
 var Server = XMPP.C2S.WebSocketServer
 var Client = require('node-xmpp-client')
 
-var server = new Server({
-  autostart: false
-})
+var server = new Server()
 server.on('connection', function (connection) {
   connection.on('authenticate', function (opts, cb) {
     cb(null, opts)
